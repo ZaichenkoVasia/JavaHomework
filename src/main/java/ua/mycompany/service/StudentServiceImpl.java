@@ -1,6 +1,6 @@
-package homework.homework4.service;
+package ua.mycompany.service;
 
-import homework.homework4.entity.Student;
+import ua.mycompany.entity.Student;
 
 import java.util.ArrayList;
 import java.util.List;

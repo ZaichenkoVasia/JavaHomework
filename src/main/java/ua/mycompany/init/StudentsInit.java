@@ -1,7 +1,7 @@
-package homework.homework4.init;
+package ua.mycompany.init;
 
-import homework.homework4.entity.Person;
-import homework.homework4.entity.Student;
+import ua.mycompany.entity.Person;
+import ua.mycompany.entity.Student;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

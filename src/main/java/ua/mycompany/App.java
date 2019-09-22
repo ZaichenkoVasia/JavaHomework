@@ -1,8 +1,8 @@
-package homework.homework4;
+package ua.mycompany;
 
-import homework.homework4.entity.Student;
-import homework.homework4.init.StudentsInit;
-import homework.homework4.service.StudentServiceImpl;
+import ua.mycompany.entity.Student;
+import ua.mycompany.init.StudentsInit;
+import ua.mycompany.service.StudentServiceImpl;
 
 import java.util.List;
 

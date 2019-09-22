@@ -1,4 +1,4 @@
-package homework.homework4.entity;
+package ua.mycompany.entity;
 
 import java.time.LocalDate;
 
