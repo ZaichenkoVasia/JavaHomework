@@ -2,14 +2,12 @@ package ua.mycompany.task5.service;
 
 import ua.mycompany.task5.domain.Text;
 
-import java.util.Objects;
-
 import static java.util.Objects.isNull;
 
 public class TextServiceImpl implements TextService {
     @Override
     public Text convertStringToText(String text) {
-      throw new UnsupportedOperationException("");
+        return new Text().split(text);
     }
 
     @Override
@@ -17,3 +15,4 @@ public class TextServiceImpl implements TextService {
         return isNull(text) ? null : text.toString();
     }
 }
+
