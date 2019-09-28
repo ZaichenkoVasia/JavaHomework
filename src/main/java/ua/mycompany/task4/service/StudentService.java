@@ -20,5 +20,7 @@ public interface StudentService {
 
     ArrayList<Student> findByGroup(String group);
 
-    ArrayList<Student> findByDepartmentAndCourse(Long idDepartment, int cource);
+    ArrayList<Student> findByDepartmentAndCourse(Long idDepartment, int course);
+
+    ArrayList<Student> findAll ();
 }

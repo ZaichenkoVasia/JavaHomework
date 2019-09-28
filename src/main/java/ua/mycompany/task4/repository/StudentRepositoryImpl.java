@@ -76,14 +76,19 @@ public class StudentRepositoryImpl implements StudentRepository {
     }
 
     @Override
-    public ArrayList<Student> findByDepartmentAndCourse(Long idDepartment, int cource) {
+    public ArrayList<Student> findByDepartmentAndCourse(Long idDepartment, int course) {
         ArrayList<Student> findByDepartmentAndCourseStudents = new ArrayList<>();
         for (Long i = 1L; i < idToStudents.size()+1; i++) {
             if (idDepartment.equals(idToStudents.get(i).getDepartment().getId())
-                    && cource == idToStudents.get(i).getCourse()) {
+                    && course == idToStudents.get(i).getCourse()) {
                 findByDepartmentAndCourseStudents.add(idToStudents.get(i));
             }
         }
         return findByDepartmentAndCourseStudents;
+    }
+
+    @Override
+    public ArrayList<Student> findAll() {
+        return new ArrayList<Student> (idToStudents.values());
     }
 }
