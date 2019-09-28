@@ -1,4 +1,4 @@
-package ua.mycompany.task7.example2;
+package ua.mycompany.task7.singleton;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;

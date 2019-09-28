@@ -20,6 +20,7 @@ public class StudentServiceImpl implements StudentService {
 
         return studentService;
     }
+
     @Override
     public Student register(Student student) {
         if (student == null) {
@@ -30,7 +31,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public Student findById(Long id) {
-        if(id<0){
+        if (id < 0) {
             throw new IllegalArgumentException("id must be > 0");
         }
         return studentRepository.findById(id);
@@ -46,7 +47,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public Student deleteById(Long id) {
-        if(id<0){
+        if (id < 0) {
             throw new IllegalArgumentException("id must be > 0");
         }
         return studentRepository.deleteById(id);
@@ -54,7 +55,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public ArrayList<Student> findByDepartment(Long idDepartment) {
-        if(idDepartment<0){
+        if (idDepartment < 0) {
             throw new IllegalArgumentException("id must be > 0");
         }
         return studentRepository.findByDepartment(idDepartment);
@@ -62,7 +63,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public ArrayList<Student> findByYear(int year) {
-        if(year<1990){
+        if (year < 1990) {
             throw new IllegalArgumentException("year must be > 1990");
         }
         return studentRepository.findByYear(year);
@@ -70,7 +71,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public ArrayList<Student> findByGroup(String group) {
-        if (group == null){
+        if (group == null) {
             throw new IllegalArgumentException("Group can not be null");
         }
         return studentRepository.findByGroup(group);
@@ -82,6 +83,11 @@ public class StudentServiceImpl implements StudentService {
             throw new IllegalArgumentException("Course must be in range [0;6] or id department must be positive");
         }
         return studentRepository.findByDepartmentAndCourse(idDepartment, course);
+    }
+
+    @Override
+    public ArrayList<Student> findAll() {
+        return studentRepository.findAll();
     }
 
 }

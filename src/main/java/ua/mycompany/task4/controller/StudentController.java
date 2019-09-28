@@ -1,10 +1,10 @@
 package ua.mycompany.task4.controller;
 
 import ua.mycompany.task4.domain.Student;
+import ua.mycompany.task4.repository.StudentRepository;
 import ua.mycompany.task4.repository.StudentRepositoryImpl;
 import ua.mycompany.task4.service.StudentService;
 import ua.mycompany.task4.service.StudentServiceImpl;
-import ua.mycompany.task4.repository.StudentRepository;
 
 import java.util.ArrayList;
 
@@ -42,5 +42,9 @@ public class StudentController {
 
     public ArrayList<Student> findByDepartmentAndCourse(Long idDepartment, int course) {
         return studentService.findByDepartmentAndCourse(idDepartment, course);
+    }
+
+    public ArrayList<Student> findAll() {
+        return studentRepository.findAll();
     }
 }
