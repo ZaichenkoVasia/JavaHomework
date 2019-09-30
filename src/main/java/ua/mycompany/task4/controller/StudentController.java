@@ -1,16 +1,20 @@
 package ua.mycompany.task4.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import ua.mycompany.task4.domain.Student;
-import ua.mycompany.task4.repository.StudentRepository;
-import ua.mycompany.task4.repository.StudentRepositoryImpl;
 import ua.mycompany.task4.service.StudentService;
-import ua.mycompany.task4.service.StudentServiceImpl;
 
 import java.util.ArrayList;
 
+@Component
 public class StudentController {
-    private StudentRepository studentRepository = StudentRepositoryImpl.getInstance();
-    private StudentService studentService = StudentServiceImpl.getInstance(studentRepository);
+    private StudentService studentService;
+
+    @Autowired
+    public StudentController(StudentService studentService) {
+        this.studentService = studentService;
+    }
 
     public Student register(Student student) {
         return studentService.register(student);
@@ -45,6 +49,6 @@ public class StudentController {
     }
 
     public ArrayList<Student> findAll() {
-        return studentRepository.findAll();
+        return studentService.findAll();
     }
 }

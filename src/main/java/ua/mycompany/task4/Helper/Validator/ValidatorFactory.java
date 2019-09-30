@@ -1,5 +1,8 @@
 package ua.mycompany.task4.Helper.Validator;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public final class ValidatorFactory {
 
     public static Validator getValidator(String field) {
