@@ -1,8 +1,11 @@
 package ua.mycompany.task4.Helper.Validator;
 
+import org.springframework.stereotype.Component;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@Component
 public final class SurnameValidator implements Validator {
     private static final String SURNAME_PATTERN = "[a-zA-Z]{1,}";
 

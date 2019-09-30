@@ -1,24 +1,20 @@
 package ua.mycompany.task4.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import ua.mycompany.task4.domain.Student;
 import ua.mycompany.task4.repository.StudentRepository;
 
 import java.util.ArrayList;
 
+@Service
 public class StudentServiceImpl implements StudentService {
+
     private StudentRepository studentRepository;
-    private static StudentServiceImpl studentService;
 
-    private StudentServiceImpl(StudentRepository studentRepository) {
+    @Autowired
+    public StudentServiceImpl(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
-    }
-
-    public static StudentService getInstance(StudentRepository studentRepository) {
-        if (studentService == null) {
-            studentService = new StudentServiceImpl(studentRepository);
-        }
-
-        return studentService;
     }
 
     @Override

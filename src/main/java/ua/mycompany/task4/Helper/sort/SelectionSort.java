@@ -1,9 +1,11 @@
 package ua.mycompany.task4.Helper.sort;
 
+import org.springframework.stereotype.Component;
 import ua.mycompany.task4.domain.Student;
 
 import java.util.ArrayList;
 
+@Component
 public final class SelectionSort {
 
     private SelectionSort() {

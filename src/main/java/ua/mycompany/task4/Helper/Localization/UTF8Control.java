@@ -1,5 +1,7 @@
 package ua.mycompany.task4.Helper.Localization;
 
+import org.springframework.stereotype.Component;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -9,6 +11,7 @@ import java.util.Locale;
 import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
 
+@Component
 public class UTF8Control extends ResourceBundle.Control {
     public ResourceBundle newBundle
             (String baseName, Locale locale, String format, ClassLoader loader, boolean reload)

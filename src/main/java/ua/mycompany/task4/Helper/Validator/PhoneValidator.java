@@ -1,8 +1,11 @@
 package ua.mycompany.task4.Helper.Validator;
 
+import org.springframework.stereotype.Component;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@Component
 public final class PhoneValidator implements Validator {
     private static final String PHONE_PATTERN = "[0-9]{12}";
 

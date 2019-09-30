@@ -1,24 +1,20 @@
 package ua.mycompany.task4.repository;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import ua.mycompany.task4.domain.Student;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+@Repository
 public class StudentRepositoryImpl implements StudentRepository {
-    private static  StudentRepository studentRepository;
     private Map<Long, Student> idToStudents = new HashMap<>();
     private static Long counter = 0L;
 
-    private StudentRepositoryImpl() {
-    }
-
-    public static StudentRepository getInstance(){
-        if(studentRepository == null){
-            studentRepository  = new StudentRepositoryImpl();
-        }
-        return studentRepository;
+    @Autowired
+    public StudentRepositoryImpl() {
     }
 
     @Override
