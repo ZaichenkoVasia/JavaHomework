@@ -26,6 +26,11 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    public Student login(String email, String password) {
+        return studentRepository.findByEmail(email);
+    }
+
+    @Override
     public Student findById(Long id) {
         if (id < 0) {
             throw new IllegalArgumentException("id must be > 0");

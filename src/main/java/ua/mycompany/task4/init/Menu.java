@@ -31,6 +31,7 @@ public class Menu {
                 .withGroup("AA-11")
                 .withCourse(1)
                 .withEmail("dsadas@gmail.com")
+                .withPassword("1111")
                 .build();
 
         Student student2 = Student.builder()
@@ -43,6 +44,7 @@ public class Menu {
                 .withGroup("AA-22")
                 .withCourse(4)
                 .withEmail("email@gmail.com")
+                .withPassword("2222")
                 .build();
 
         Student student3 = Student.builder()
@@ -55,6 +57,7 @@ public class Menu {
                 .withGroup("AA-22")
                 .withCourse(4)
                 .withEmail("tomking@gmail.com")
+                .withPassword("3333")
                 .build();
 
         studentService.register(student1);

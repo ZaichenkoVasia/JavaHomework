@@ -8,6 +8,8 @@ public interface StudentRepository {
 
     Student save(Student student);
 
+    Student findByEmail(String email);
+
     Student findById(Long id);
 
     void update(Student student);

@@ -15,6 +15,7 @@ public class Student implements Comparable<Student> {
     private final String group;
     private final int course;
     private final String email;
+    private final String password;
     private static Long counter = 0L;
 
     private final Comparator<Student> STUDENT_COMPARATOR_BY_AGE =
@@ -37,6 +38,7 @@ public class Student implements Comparable<Student> {
         this.group = builder.group;
         this.course = builder.course;
         this.email = builder.email;
+        this.password = builder.password;
     }
 
     public static Builder builder() {
@@ -79,6 +81,14 @@ public class Student implements Comparable<Student> {
         return course;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
     public Comparator<Student> getUserComparator() {
         return STUDENT_COMPARATOR_BY_NAME.thenComparing(STUDENT_COMPARATOR_BY_SURNAME.thenComparing(STUDENT_COMPARATOR_BY_AGE));
     }
@@ -98,6 +108,7 @@ public class Student implements Comparable<Student> {
         private String group;
         private int course;
         private String email;
+        private String password;
 
         private Builder() {
         }
@@ -151,6 +162,11 @@ public class Student implements Comparable<Student> {
             return this;
         }
 
+        public Builder withPassword(String password) {
+            this.password = password;
+            return this;
+        }
+
     }
 
     @Override
@@ -167,12 +183,16 @@ public class Student implements Comparable<Student> {
                 Objects.equals(department, student.department) &&
                 Objects.equals(phoneNumber, student.phoneNumber) &&
                 Objects.equals(group, student.group) &&
-                Objects.equals(email, student.email);
+                Objects.equals(email, student.email) &&
+                Objects.equals(password, student.password) &&
+                Objects.equals(STUDENT_COMPARATOR_BY_AGE, student.STUDENT_COMPARATOR_BY_AGE) &&
+                Objects.equals(STUDENT_COMPARATOR_BY_NAME, student.STUDENT_COMPARATOR_BY_NAME) &&
+                Objects.equals(STUDENT_COMPARATOR_BY_SURNAME, student.STUDENT_COMPARATOR_BY_SURNAME);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, surname, birthday, address, department, phoneNumber, group, course, email);
+        return Objects.hash(id, name, surname, birthday, address, department, phoneNumber, group, course, email, password, STUDENT_COMPARATOR_BY_AGE, STUDENT_COMPARATOR_BY_NAME, STUDENT_COMPARATOR_BY_SURNAME);
     }
 
     @Override

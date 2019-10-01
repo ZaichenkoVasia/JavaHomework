@@ -63,11 +63,13 @@ public class StudentViewInfo {
         System.out.println("1 - " + lang.getString("viewStudent"));
         System.out.println("2 - " + lang.getString("addStudent"));
         System.out.println("3 - " + lang.getString("sortStudent"));
-        System.out.println("4 - " + lang.getString("chooseLanguage"));
+        System.out.println("4 - " + lang.getString("loginStudent"));
         System.out.println("5 - " + lang.getString("inputId"));
-        System.out.println("6 - " + lang.getString("inputDepartment"));
+        System.out.println("6 - " + lang.getString("inputIdDepartment"));
         System.out.println("7 - " + lang.getString("inputGroup"));
         System.out.println("8 - " + lang.getString("inputCourse"));
+        System.out.println("9 - " + lang.getString("chooseLanguage"));
+
 
         int choice;
         try {
@@ -87,7 +89,7 @@ public class StudentViewInfo {
                 sortUser();
                 break;
             case 4:
-                chooseMenuLang();
+                System.out.println(loginStudent());
                 break;
             case 5:
                 System.out.println(findById());
@@ -101,10 +103,12 @@ public class StudentViewInfo {
             case 8:
                 printAllUsers(findByDepartmentAndCourse());
                 break;
+            case 9:
+                chooseMenuLang();
+                break;
         }
         menu();
     }
-
     private void printAllUsers(ArrayList<Student> students) {
         if (students.isEmpty()) {
             System.out.println(lang.getString("noStudentYet"));
@@ -193,4 +197,13 @@ public class StudentViewInfo {
         return studentController.findByDepartmentAndCourse(idDepartment, course);
     }
 
+    private Student loginStudent(){
+        String email = writeFieldValidator("email");
+
+        System.out.println(lang.getString("passwordStudent"));
+        String password = in.nextLine();
+
+        return studentController.login(email,password);
+
+    }
 }

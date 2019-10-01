@@ -8,6 +8,8 @@ public interface StudentService {
 
     Student register(Student student);
 
+    Student login (String email, String password);
+
     Student findById(Long id);
 
     void update(Student student);
