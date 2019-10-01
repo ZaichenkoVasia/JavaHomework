@@ -2,7 +2,7 @@ package ua.mycompany.task4.view;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ua.mycompany.task4.Helper.Localization.UTF8Control;
+import ua.mycompany.task4.Helper.Utility.UTF8Control;
 import ua.mycompany.task4.Helper.Validator.ValidatorFactory;
 import ua.mycompany.task4.Helper.sort.BubbleSort;
 import ua.mycompany.task4.controller.StudentController;
@@ -11,10 +11,7 @@ import ua.mycompany.task4.domain.Student;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Locale;
-import java.util.ResourceBundle;
-import java.util.Scanner;
+import java.util.*;
 
 @Component
 public class StudentViewInfo {
@@ -172,7 +169,7 @@ public class StudentViewInfo {
         return fieldInput;
     }
 
-    private Student findById(){
+    private Optional<Student> findById(){
         System.out.println(lang.getString("inputId"));
         return studentController.findById(in.nextLong());
     }
@@ -197,7 +194,7 @@ public class StudentViewInfo {
         return studentController.findByDepartmentAndCourse(idDepartment, course);
     }
 
-    private Student loginStudent(){
+    private Optional<Student> loginStudent(){
         String email = writeFieldValidator("email");
 
         System.out.println(lang.getString("passwordStudent"));

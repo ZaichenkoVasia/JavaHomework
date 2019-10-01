@@ -6,6 +6,7 @@ import ua.mycompany.task4.domain.Student;
 import ua.mycompany.task4.repository.StudentRepository;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 @Service
 public class StudentServiceImpl implements StudentService {
@@ -18,7 +19,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Student register(Student student) {
+    public Optional<Student> register(Student student) {
         if (student == null) {
             throw new IllegalArgumentException(" Student is null");
         }
@@ -26,12 +27,12 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Student login(String email, String password) {
+    public Optional<Student> login(String email, String password) {
         return studentRepository.findByEmail(email);
     }
 
     @Override
-    public Student findById(Long id) {
+    public Optional<Student> findById(Long id) {
         if (id < 0) {
             throw new IllegalArgumentException("id must be > 0");
         }
@@ -47,7 +48,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Student deleteById(Long id) {
+    public Optional<Student> deleteById(Long id) {
         if (id < 0) {
             throw new IllegalArgumentException("id must be > 0");
         }
