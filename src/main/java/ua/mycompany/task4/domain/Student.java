@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.Objects;
 
-public class Student implements Comparable<Student> {
+public class Student implements Comparable<Student>, StudentPrototype {
     private final Long id;
     private final String name;
     private final String surname;
@@ -28,7 +28,11 @@ public class Student implements Comparable<Student> {
             Comparator.comparing(student -> student.surname);
 
     private Student(Builder builder) {
-        this.id = ++counter;
+        if (builder.id == null) {
+            this.id = ++counter;
+        } else {
+            this.id = builder.id;
+        }
         this.name = builder.name;
         this.surname = builder.surname;
         this.birthday = builder.birthday;
@@ -98,7 +102,25 @@ public class Student implements Comparable<Student> {
         return this.getUserComparator().compare(this, o);
     }
 
+    @Override
+    public StudentPrototype clone(String newPassword) {
+        return builder()
+                .withId(id)
+                .withName(name)
+                .withSurname(surname)
+                .withBirthday(birthday)
+                .withAddress((Address) address.clone())
+                .withDepartment((Department) department.clone())
+                .withPhoneNumber(phoneNumber)
+                .withGroup(group)
+                .withCourse(course)
+                .withEmail(email)
+                .withPassword(newPassword)
+                .build();
+    }
+
     public static class Builder {
+        private Long id;
         private String name;
         private String surname;
         private LocalDate birthday;
@@ -115,6 +137,11 @@ public class Student implements Comparable<Student> {
 
         public Student build() {
             return new Student(this);
+        }
+
+        public Builder withId(Long id) {
+            this.id = id;
+            return this;
         }
 
         public Builder withName(String name) {
@@ -184,15 +211,12 @@ public class Student implements Comparable<Student> {
                 Objects.equals(phoneNumber, student.phoneNumber) &&
                 Objects.equals(group, student.group) &&
                 Objects.equals(email, student.email) &&
-                Objects.equals(password, student.password) &&
-                Objects.equals(STUDENT_COMPARATOR_BY_AGE, student.STUDENT_COMPARATOR_BY_AGE) &&
-                Objects.equals(STUDENT_COMPARATOR_BY_NAME, student.STUDENT_COMPARATOR_BY_NAME) &&
-                Objects.equals(STUDENT_COMPARATOR_BY_SURNAME, student.STUDENT_COMPARATOR_BY_SURNAME);
+                Objects.equals(password, student.password);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, surname, birthday, address, department, phoneNumber, group, course, email, password, STUDENT_COMPARATOR_BY_AGE, STUDENT_COMPARATOR_BY_NAME, STUDENT_COMPARATOR_BY_SURNAME);
+        return Objects.hash(id, name, surname, birthday, address, department, phoneNumber, group, course, email, password);
     }
 
     @Override
