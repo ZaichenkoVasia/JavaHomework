@@ -2,7 +2,7 @@ package ua.mycompany.task4.domain;
 
 import java.util.Objects;
 
-public class Address {
+public class Address implements Prototype {
     private final String city;
     private final String street;
     private final int flat;
@@ -47,5 +47,10 @@ public class Address {
                 ", street='" + street + '\'' +
                 ", flat=" + flat +
                 '}';
+    }
+
+    @Override
+    public Prototype clone() {
+        return new Address(city, street, flat);
     }
 }

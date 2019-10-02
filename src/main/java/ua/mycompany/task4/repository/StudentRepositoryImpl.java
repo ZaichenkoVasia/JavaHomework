@@ -7,6 +7,7 @@ import ua.mycompany.task4.domain.Student;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @Repository
 public class StudentRepositoryImpl implements StudentRepository {
@@ -18,13 +19,25 @@ public class StudentRepositoryImpl implements StudentRepository {
     }
 
     @Override
-    public Student save(Student student) {
-        return idToStudents.put(++counter, student);
+    public Optional<Student> save(Student student) {
+        return Optional.ofNullable(idToStudents.put(++counter, student));
     }
 
     @Override
-    public Student findById(Long id) {
-        return idToStudents.get(id);
+    public Optional<Student> findByEmail(String email) {
+        Student student = null;
+        for (Long i = 1L; i < idToStudents.size() + 1; i++) {
+            if (idToStudents.get(i).getEmail().equals(email)) {
+                student = idToStudents.get(i);
+                break;
+            }
+        }
+        return Optional.ofNullable(student);
+    }
+
+    @Override
+    public Optional<Student> findById(Long id) {
+        return Optional.ofNullable(idToStudents.get(id));
     }
 
     @Override
@@ -33,8 +46,8 @@ public class StudentRepositoryImpl implements StudentRepository {
     }
 
     @Override
-    public Student deleteById(Long id) {
-        return idToStudents.remove(id);
+    public Optional<Student> deleteById(Long id) {
+        return Optional.ofNullable(idToStudents.remove(id));
     }
 
     @Override

@@ -1,4 +1,4 @@
-package ua.mycompany.task4.Helper.Localization;
+package ua.mycompany.task4.Helper.Utility;
 
 import org.springframework.stereotype.Component;
 

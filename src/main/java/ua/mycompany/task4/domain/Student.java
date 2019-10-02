@@ -1,10 +1,13 @@
 package ua.mycompany.task4.domain;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.Objects;
+import java.util.Optional;
 
-public class Student implements Comparable<Student> {
+public class Student implements Comparable<Student>, StudentPrototype {
     private final Long id;
     private final String name;
     private final String surname;
@@ -14,7 +17,11 @@ public class Student implements Comparable<Student> {
     private final String phoneNumber;
     private final String group;
     private final int course;
+
+    @Email(message = "{user.email.invalid}")
+    @NotEmpty(message = "Please enter email")
     private final String email;
+    private final String password;
     private static Long counter = 0L;
 
     private final Comparator<Student> STUDENT_COMPARATOR_BY_AGE =
@@ -27,7 +34,11 @@ public class Student implements Comparable<Student> {
             Comparator.comparing(student -> student.surname);
 
     private Student(Builder builder) {
-        this.id = ++counter;
+        if (builder.id == null) {
+            this.id = ++counter;
+        } else {
+            this.id = builder.id;
+        }
         this.name = builder.name;
         this.surname = builder.surname;
         this.birthday = builder.birthday;
@@ -37,6 +48,7 @@ public class Student implements Comparable<Student> {
         this.group = builder.group;
         this.course = builder.course;
         this.email = builder.email;
+        this.password = builder.password;
     }
 
     public static Builder builder() {
@@ -79,6 +91,14 @@ public class Student implements Comparable<Student> {
         return course;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
     public Comparator<Student> getUserComparator() {
         return STUDENT_COMPARATOR_BY_NAME.thenComparing(STUDENT_COMPARATOR_BY_SURNAME.thenComparing(STUDENT_COMPARATOR_BY_AGE));
     }
@@ -88,7 +108,33 @@ public class Student implements Comparable<Student> {
         return this.getUserComparator().compare(this, o);
     }
 
+    @Override
+    public StudentPrototype clone(String newPassword) {
+        Address address = (Address)Optional.ofNullable(this.address)
+                .map(Address::clone)
+                .orElse(null);
+
+        Department department = (Department) Optional.ofNullable(this.department)
+                .map(Department::clone)
+                .orElse(null);
+
+        return builder()
+                .withId(id)
+                .withName(name)
+                .withSurname(surname)
+                .withBirthday(birthday)
+                .withAddress(address)
+                .withDepartment(department)
+                .withPhoneNumber(phoneNumber)
+                .withGroup(group)
+                .withCourse(course)
+                .withEmail(email)
+                .withPassword(newPassword)
+                .build();
+    }
+
     public static class Builder {
+        private Long id;
         private String name;
         private String surname;
         private LocalDate birthday;
@@ -98,12 +144,18 @@ public class Student implements Comparable<Student> {
         private String group;
         private int course;
         private String email;
+        private String password;
 
         private Builder() {
         }
 
         public Student build() {
             return new Student(this);
+        }
+
+        public Builder withId(Long id) {
+            this.id = id;
+            return this;
         }
 
         public Builder withName(String name) {
@@ -151,6 +203,11 @@ public class Student implements Comparable<Student> {
             return this;
         }
 
+        public Builder withPassword(String password) {
+            this.password = password;
+            return this;
+        }
+
     }
 
     @Override
@@ -167,12 +224,13 @@ public class Student implements Comparable<Student> {
                 Objects.equals(department, student.department) &&
                 Objects.equals(phoneNumber, student.phoneNumber) &&
                 Objects.equals(group, student.group) &&
-                Objects.equals(email, student.email);
+                Objects.equals(email, student.email) &&
+                Objects.equals(password, student.password);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, surname, birthday, address, department, phoneNumber, group, course, email);
+        return Objects.hash(id, name, surname, birthday, address, department, phoneNumber, group, course, email, password);
     }
 
     @Override

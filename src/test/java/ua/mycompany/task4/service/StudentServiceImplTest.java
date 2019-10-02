@@ -6,15 +6,16 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
+import ua.mycompany.task4.Helper.Utility.PasswordUtils;
 import ua.mycompany.task4.domain.Department;
 import ua.mycompany.task4.domain.Student;
 import ua.mycompany.task4.repository.StudentRepository;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Optional;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.when;
@@ -34,29 +35,44 @@ public class StudentServiceImplTest {
 
     @Test
     public void shouldReturnRegisterStudent() {
-        Student studentExpected = Student.builder().build();
-        when(studentRepository.save(any(Student.class))).thenReturn(studentExpected);
+        Student studentOldPassword = Student.builder().withPassword("1234").build();
+        Student studentExpected = (Student) studentOldPassword.clone(PasswordUtils.generateSecurePassword(studentOldPassword.getPassword()));
 
-        Student studentActual = studentService.register(studentExpected);
-        assertEquals(studentExpected, studentActual);
+        when(studentRepository.save(any(Student.class))).thenReturn(Optional.ofNullable(studentExpected));
+
+        Optional<Student> studentActual = studentService.register(studentOldPassword);
+        studentActual.ifPresent(student -> assertTrue(PasswordUtils.verifyUserPassword(studentOldPassword.getPassword(),studentActual.get().getPassword())));
+        assertNotEquals("1234", studentActual.get().getPassword());
+    }
+
+    @Test
+    public void shouldReturnLoginStudent() {
+        Student studentOldPassword = Student.builder().withEmail("123@gmail.com").withPassword("1234").build();
+        Student studentExpected = (Student) studentOldPassword.clone(PasswordUtils.generateSecurePassword(studentOldPassword.getPassword()));
+
+        when(studentRepository.findByEmail(any(String.class))).thenReturn(Optional.ofNullable(studentExpected));
+
+        Optional<Student> studentActual = studentService.login(studentOldPassword.getEmail(), studentOldPassword.getPassword());
+        studentActual.ifPresent(student -> assertTrue(PasswordUtils.verifyUserPassword(studentOldPassword.getPassword(),studentActual.get().getPassword())));
+        assertNotEquals("1234", studentActual.get().getPassword());
     }
 
     @Test
     public void shouldReturnStudentById() {
         Student studentExpected = Student.builder().build();
-        when(studentRepository.findById(1L)).thenReturn(studentExpected);
+        when(studentRepository.findById(1L)).thenReturn(Optional.ofNullable(studentExpected));
 
-        Student studentActual = studentService.findById(1L);
-        assertEquals(studentExpected, studentActual);
+        Optional<Student> studentActual = studentService.findById(1L);
+        studentActual.ifPresent(student -> assertEquals(studentExpected, student));
     }
 
     @Test
     public void shouldReturnDeleteStudent() {
         Student studentExpected = Student.builder().build();
-        when(studentRepository.deleteById(1L)).thenReturn(studentExpected);
+        when(studentRepository.deleteById(1L)).thenReturn(Optional.ofNullable(studentExpected));
 
-        Student studentActual = studentService.deleteById(1L);
-        assertEquals(studentExpected, studentActual);
+        Optional<Student> studentActual = studentService.deleteById(1L);
+        studentActual.ifPresent(student -> assertEquals(studentExpected, student));
     }
 
     @Test
