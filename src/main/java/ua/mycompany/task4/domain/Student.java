@@ -3,6 +3,7 @@ package ua.mycompany.task4.domain;
 import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.Objects;
+import java.util.Optional;
 
 public class Student implements Comparable<Student>, StudentPrototype {
     private final Long id;
@@ -104,13 +105,21 @@ public class Student implements Comparable<Student>, StudentPrototype {
 
     @Override
     public StudentPrototype clone(String newPassword) {
+        Address address = (Address)Optional.ofNullable(this.address)
+                .map(Address::clone)
+                .orElse(null);
+
+        Department department = (Department) Optional.ofNullable(this.department)
+                .map(Department::clone)
+                .orElse(null);
+
         return builder()
                 .withId(id)
                 .withName(name)
                 .withSurname(surname)
                 .withBirthday(birthday)
-                .withAddress((Address) address.clone())
-                .withDepartment((Department) department.clone())
+                .withAddress(address)
+                .withDepartment(department)
                 .withPhoneNumber(phoneNumber)
                 .withGroup(group)
                 .withCourse(course)

@@ -2,7 +2,9 @@ package ua.mycompany.task4.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ua.mycompany.task4.Helper.Utility.PasswordUtils;
 import ua.mycompany.task4.domain.Student;
+import ua.mycompany.task4.exception.UncorrectLoginException;
 import ua.mycompany.task4.repository.StudentRepository;
 
 import java.util.ArrayList;
@@ -23,13 +25,27 @@ public class StudentServiceImpl implements StudentService {
         if (student == null) {
             throw new IllegalArgumentException(" Student is null");
         }
-        return studentRepository.save(student);
+
+        String encodePassword = PasswordUtils.generateSecurePassword(student.getPassword());
+        Student encodeStudent = (Student) student.clone(encodePassword);
+        return studentRepository.save(encodeStudent);
     }
 
     @Override
     public Optional<Student> login(String email, String password) {
-        return studentRepository.findByEmail(email);
+        String encodePassword = PasswordUtils.generateSecurePassword(password);
+
+        Student student = studentRepository.findByEmail(email)
+                .orElseThrow(() -> new UncorrectLoginException("Email is uncorrected"));
+
+        String studentPassword = student.getPassword();
+
+        if (studentPassword.equals(encodePassword)) {
+            return Optional.of(student);
+        }
+        throw new UncorrectLoginException("Password is uncorrected");
     }
+
 
     @Override
     public Optional<Student> findById(Long id) {
