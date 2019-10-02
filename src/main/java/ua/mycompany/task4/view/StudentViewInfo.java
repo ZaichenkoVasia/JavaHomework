@@ -9,6 +9,7 @@ import ua.mycompany.task4.controller.StudentController;
 import ua.mycompany.task4.domain.Department;
 import ua.mycompany.task4.domain.Student;
 
+//import javax.validation.ConstraintViolation;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -130,6 +131,11 @@ public class StudentViewInfo {
         System.out.println(lang.getString("groupStudent"));
         String group = in.nextLine();
         int course = Integer.parseInt(writeFieldValidator("course"));
+        System.out.println(lang.getString("passwordStudent"));
+        String password = in.nextLine();
+//        javax.validation.ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+//
+//        Validator validator = factory.getValidator();
 
         Student student = Student.builder()
                 .withName(name)
@@ -140,9 +146,20 @@ public class StudentViewInfo {
                 .withGroup(group)
                 .withCourse(course)
                 .withEmail(email)
+                .withPassword(password)
                 .build();
         studentController.register(student);
         System.out.println(lang.getString("studentCreated") + "\n");
+
+//        Set<ConstraintViolation<Student>> constraintViolations = validator.validate(student);
+//
+//        if (constraintViolations.size() > 0) {
+//            for (ConstraintViolation<Student> violation : constraintViolations) {
+//                System.out.println(violation.getMessage());
+//            }
+//        } else {
+//            System.out.println("Valid Object");
+//        }
 
         menu();
     }

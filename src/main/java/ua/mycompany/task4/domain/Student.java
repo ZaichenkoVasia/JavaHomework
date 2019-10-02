@@ -1,5 +1,7 @@
 package ua.mycompany.task4.domain;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.Objects;
@@ -15,6 +17,9 @@ public class Student implements Comparable<Student>, StudentPrototype {
     private final String phoneNumber;
     private final String group;
     private final int course;
+
+    @Email(message = "{user.email.invalid}")
+    @NotEmpty(message = "Please enter email")
     private final String email;
     private final String password;
     private static Long counter = 0L;
