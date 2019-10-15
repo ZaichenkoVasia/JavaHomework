@@ -1,6 +1,7 @@
 package ua.mycompany.parser.json;
 
 import com.google.gson.Gson;
+import ua.mycompany.parser.User;
 
 import java.io.FileReader;
 import java.io.IOException;

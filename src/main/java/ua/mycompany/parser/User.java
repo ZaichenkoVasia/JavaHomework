@@ -1,13 +1,22 @@
-package ua.mycompany.parser.json;
+package ua.mycompany.parser;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 import java.util.Objects;
 
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class User {
-    private final String name;
-    private final String surname;
-    private final int age;
-    private final List<String> skills;
+    private String name;
+    private String surname;
+    private int age;
+    private List<String> skills;
+
+    public User() {
+    }
 
     public User(String name, String surname, int age, List<String> skills) {
         this.name = name;
