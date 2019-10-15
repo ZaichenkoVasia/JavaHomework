@@ -20,37 +20,36 @@ public class HashMap<K, V> implements Map<K, V> {
         }
         int counterCollision =0;
         int bucketIndex = Math.abs(key.hashCode() % buckets.length);
-        Node<K, V> entry = getEntryKeyByHashcode(key);
-        if (entry != null) {
+        Node<K, V> node = getNodeKeyByHashcode(key);
+        if (node != null) {
             boolean done = false;
-            while (!done && entry != null) {
+            while (!done && node != null) {
                 if(++counterCollision >= MAX_COLLISION_SIZE){
                     growSize();
                 }
-                if (key.equals(entry.getKey())) {
-                    entry.setValue(value);
-                } else if (entry.getNext() == null) {
-                    entry.setNext(new Node<K, V>(key, value));
+                if (key.equals(node.getKey())) {
+                    node.setValue(value);
+                } else if (node.getNext() == null) {
+                    node.setNext(new Node<>(key, value));
                     done = true;
-
                 }
-                entry = entry.getNext();
+                node = node.getNext();
             }
 
         } else {
             buckets[bucketIndex] = new Node<>(key, value);
             size++;
         }
-        return entry != null ? entry.getValue() : null;
+        return node != null ? node.getValue() : null;
     }
 
     private void growSize() {
         int newSize = buckets.length * 2;
         buckets = Arrays.copyOf(buckets, newSize);
-        transferEntries();
+        transferNodes();
     }
 
-    private void transferEntries() {
+    private void transferNodes() {
         for (Node<K, V> bucket : buckets) {
             if(bucket != null) {
                 while (bucket.getNext() != null) {
@@ -63,15 +62,15 @@ public class HashMap<K, V> implements Map<K, V> {
 
     @Override
     public V getByKey(K key) {
-        Node<K, V> entry = getEntryKeyByHashcode(key);
+        Node<K, V> node = getNodeKeyByHashcode(key);
 
-        while (entry != null && !key.equals(entry.getKey())) {
-            entry = entry.getNext();
+        while (node != null && !key.equals(node.getKey())) {
+            node = node.getNext();
         }
-        return entry != null ? entry.getValue() : null;
+        return node != null ? node.getValue() : null;
     }
 
-    private Node<K, V> getEntryKeyByHashcode(K key) {
+    private Node<K, V> getNodeKeyByHashcode(K key) {
         int bucketIndex = Math.abs(key.hashCode() % buckets.length);
         return buckets[bucketIndex];
     }
@@ -96,7 +95,6 @@ public class HashMap<K, V> implements Map<K, V> {
                 while (bucketCollision != null) {
                     values.add(bucketCollision.getValue());
                     bucketCollision = bucketCollision.getNext();
-
                 }
             }
         }
